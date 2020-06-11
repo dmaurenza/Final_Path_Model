@@ -4,7 +4,9 @@ library(corrplot)
 # Global
 
 Eco_Var <- read_csv("RData/Eco_Var2.csv")
-Socio_Var <- read_csv("RData/Socio_Var2.csv")
+#Socio_Var <- read_csv("RData/Socio_Var2.csv")
+Socio_Var <- read_csv("RData/Socio_Var2_urban.csv") # a partir daqui, script não muda mais em razão de Urban Area
+
 Global_Var <- left_join(Eco_Var, Socio_Var, by = "Site") %>% 
   select(-RR_var.y) %>% 
   rename(RR_var = RR_var.x)

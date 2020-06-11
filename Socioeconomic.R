@@ -4,26 +4,21 @@ library(MuMIn)
 
 # Reading dataset ----
 #Need to check number of colums, in scale function
-data <- read_csv("RData/Datafull2.csv")
-#data <- read_csv("RData/Datafull2_urban.csv")
+#data <- read_csv("RData/Datafull2.csv")
+data <- read_csv("RData/Datafull2_urban.csv")
 # Dataframe for Eco and Socio variable ------------------------------------
 
 Socio <- data %>% 
-  select(Site, RR_var, RRmean, BAI1317_05Km: BAI1317_75Km, Cropland_05Km: Cropland_75Km, GrossDef_05Km: NBR1317_75Km, OpCostIISMean_05Km: PercUrbArea09_75Km, RuralPop_05Km:TotalRoadDensity_75Km, cdd_05Km: deltaGPWDensity0010_75Km, fty_05Km: pastoIIS_75Km, sa_05Km: sa_75Km, strictlyPA_05Km: strictlyPA_75Km, wfire_05Km: wfire_75Km, Taxon, -latitude_209564535, -longitude_209564535)
+  select(Site, RR_var, RRmean, BAI1317_05Km: BAI1317_75Km, Cropland_05Km: Cropland_75Km, GrossDef_05Km: NBR1317_75Km, OpCostIISMean_05Km: PercUrbArea09_75Km, RuralPop_05Km:TotalRoadDensity_75Km, cdd_05Km: deltaGPWDensity0010_75Km, fty_05Km: pastoIIS_75Km, sa_05Km: sa_75Km, strictlyPA_05Km: strictlyPA_75Km, wfire_05Km: wfire_75Km, Taxon, -Latitude.y, -Longitude.y, -latitude_209564535, -longitude_209564535)
 colnames(data)
 colnames(Socio)
 
 
-# Socio <- data %>% 
-#   select(Site, RR_var, RRmean, BAI1317_05Km: BAI1317_75Km, Cropland_05Km: Cropland_75Km, GrossDef_05Km: NBR1317_75Km, OpCostIISMean_05Km: PercUrbArea09_75Km, RuralPop_05Km:TotalRoadDensity_75Km, cdd_05Km: deltaGPWDensity0010_75Km, fty_05Km: pastoIIS_75Km, sa_05Km: sa_75Km, strictlyPA_05Km: strictlyPA_75Km, wfire_05Km: wfire_75Km, Taxon, -latitude_209564535, -longitude_209564535, -Latitude.y, -Latitude.y, -Longitude.y)
-# colnames(data)
-# colnames(Socio)
-
 # Model selection ---------------------------------------------------------
 # Socio
 
-list_variable_Socio <- colnames(Socio[4:196])
-lm_variable_Socio <- as.data.frame(Socio[4:196])
+list_variable_Socio <- colnames(Socio[4:195])
+lm_variable_Socio <- as.data.frame(Socio[4:195])
 
 # Using Variance
 
@@ -94,7 +89,7 @@ Pasture <- model.sel(c(Listagem_Var_Socio[55:60], Listagem_Var_Socio[169:174])) 
 # Final Table -----
 Socio_Var <- data %>% 
   select(Site, RR_var, BAI1317_10Km, cropIIS_05Km, GrossDef_100Km,  IDH03_25Km, OpCostIIS_100Km_SUM, pastoIIS_10Km, PercUrbArea09_50Km,  RuralPop_50Km, RuralPvty_05Km, T1RoadDensity_50Km, cdd_100Km, deltaGPWDensity0010_25Km, fty_25Km, govrnce_05Km, sa_50Km, strictlyPA_100Km)
-write_csv(Socio_Var, "RData/Socio_Var2.csv")
+#write_csv(Socio_Var, "RData/Socio_Var2.csv")
 write_csv(Socio_Var, "RData/Socio_Var2_urban.csv")
 #### TERMINA AQUI #####
 #Hist----- chamamos datafull_base2 do pré-processing antes de scalonar e tiramos os outlyers

@@ -3,11 +3,11 @@
 library(tidyverse)
 
 # Reading datasets -------------------------------------------
-#buffer_09_06_2020 <- read_csv("Biodiversity_Revision_09_06_2020_filtrado.csv")%>% 
-#  mutate(Site = as.character(Site))
-datafull <- read_csv("database.full.csv")
-buffer <- read_csv("Biodiversity_Revision.csv") %>% 
+buffer_09_06_2020 <- read_csv("Biodiversity_Revision_09_06_2020_filtrado.csv")%>% 
   mutate(Site = as.character(Site))
+datafull <- read_csv("database.full.csv")
+#buffer <- read_csv("Biodiversity_Revision.csv") %>% 
+#  mutate(Site = as.character(Site))
 
 ## Biodiversity data
 datafull <- datafull %>% 
@@ -22,15 +22,10 @@ colnames(datafull)
 datafull <- datafull %>% 
   select(Study, Site, Longitude, Latitude, Past_disturbance, Forest_conversion, Study_year, Time_restored, Plants:Mammals, RR, Ecological_metric, Reference)
 class(buffer$Site)
-## Merge biodiversity & predictor variables in a single data frame
-# datafull <- datafull %>% 
-#   inner_join(buffer, by = "Site") %>% 
-#   select(-`system:index`, -RR_var)
-# colnames(datafull)  
 
 datafull <- datafull %>% #Using buffer 09_06_2020 
-  #inner_join(buffer_09_06_2020, by = "Site") %>% 
-  inner_join(buffer, by = "Site") %>% 
+  inner_join(buffer_09_06_2020, by = "Site") %>% 
+  #inner_join(buffer, by = "Site") %>% 
   select(-`system:index`)
 colnames(datafull)  
 # Removing NAs from Time since restoration started
@@ -102,8 +97,8 @@ boxplot(RR ~ Taxon, data = datafull)
 colnames(datafull)
 
 # Calculating RR var and RR mean
-data <- datafull %>% 
-  select(-RR_var) 
+data <- datafull #%>% There is no RR_var in buffer_09_06_2020
+  #select(-RR_var) 
 ## Script for RRvar
 data$N<-1
 #data2<-na.omit(data)
@@ -178,7 +173,7 @@ datafull_base2<-datafull
 #  select( -urb_05Km, -urb_100Km, -urb_10Km, -urb_25Km, -urb_50Km, -urb_75Km, latitude_209564#535, -longitude_209564535, -Latitude.x, -Latitude.y)
 
 datafull <- datafull %>%
-  select( -urb_05Km, -urb_100Km, -urb_10Km, -urb_25Km, -urb_50Km, -urb_75Km, latitude_209564535, longitude_209564535 )
+  select( -urb_05Km, -urb_100Km, -urb_10Km, -urb_25Km, -urb_50Km, -urb_75Km)
 
 colnames(datafull) 
 # # Saving data before scale function
@@ -191,8 +186,8 @@ colnames(datafull)
 # datafull %>%
 #   select(Study, Site,RR, Ecological_metric, Taxon, RRmean, RR_var)
 # 
-datafull[,c(17:324, 329:331)] <- scale(datafull[,c(17:324, 329:331)])
-# datafull[,c(17:326, 330:333)] <- scale(datafull[,c(17:326, 330:333)])
+# datafull[,c(17:324, 329:331)] <- scale(datafull[,c(17:324, 329:331)])
+datafull[,c(17:326, 331:333)] <- scale(datafull[,c(17:326, 331:333)])
 
 
 # Final table -------------------------------------------------------------
@@ -209,5 +204,5 @@ sort(data$RR_var)
 # Saving Final Table ------------------------------------------------------
 x <- read_csv("RData/Datafull2.csv")
 colnames(x)
-write_csv(data, "RData/Datafull2.csv")
-#write_csv(data, "RData/Datafull2_urban.csv")
+#write_csv(data, "RData/Datafull2.csv")
+write_csv(data, "RData/Datafull2_urban.csv")
